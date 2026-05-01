@@ -1,0 +1,456 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blue:#0112FE;--gold:#FFD700;--bg:#F5F7FF;--card:#fff;--text:#0a0a0a;--muted:#888;--border:#eaedff}
+.wrap{background:#e0e4f7;display:flex;justify-content:center;padding:20px 0}
+.phone{font-family:'Plus Jakarta Sans',sans-serif;width:375px;background:var(--blue);border-radius:44px;overflow:hidden;border:8px solid #111;display:flex;flex-direction:column;position:relative}
+.sbar{background:var(--blue);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 18px 8px;font-size:11px;font-weight:600}
+.hdr-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 8px}
+.profile-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.15);border-radius:24px;padding:5px 10px 5px 5px;cursor:pointer;border:1px solid rgba(255,255,255,0.2)}
+.av{width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--blue)}
+.profile-pill span{color:#fff;font-size:11px;font-weight:600}
+.hdr-right{display:flex;align-items:center;gap:8px}
+.hdr-icon-btn{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.coins-pill{display:flex;align-items:center;gap:5px;background:rgba(0,0,0,0.2);border-radius:24px;padding:5px 12px;cursor:pointer;border:1px solid rgba(255,255,255,0.15)}
+.coin-icon{width:18px;height:18px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#7a5500}
+.coins-pill span{color:var(--gold);font-size:11px;font-weight:700}
+.slider-wrap{overflow:hidden}
+.slides{display:flex;transition:transform 0.45s cubic-bezier(.4,0,.2,1)}
+.slide{min-width:100%;height:170px;display:flex;flex-direction:column;justify-content:center;padding:16px 20px;cursor:pointer;user-select:none;position:relative;background:var(--blue)}
+.slide h2{color:#fff;font-size:17px;font-weight:800;line-height:1.2;margin-bottom:4px;max-width:195px}
+.slide p{color:rgba(255,255,255,0.7);font-size:11px;margin-bottom:12px;max-width:185px}
+.slide-btn{background:#fff;color:#0112FE;border:none;border-radius:20px;padding:8px 18px;font-size:11px;font-weight:800;cursor:pointer;width:fit-content}
+.slide-art{position:absolute;right:16px;top:50%;transform:translateY(-50%);text-align:center}
+.slide-badge{background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.2);border-radius:14px;padding:10px 12px;color:#fff}
+.slide-badge .pct{font-size:28px;font-weight:800;line-height:1}
+.slide-badge .lbl{font-size:9px;opacity:0.8;margin-top:2px}
+.sdots{display:flex;justify-content:center;gap:5px;padding:10px 0 14px}
+.sdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:all 0.2s}
+.sdot.active{background:#fff;width:18px;border-radius:3px}
+.white-body{background:var(--bg);border-radius:26px 26px 0 0;padding:16px 14px 0;flex:1}
+.bal-section{background:var(--card);border-radius:18px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(1,18,254,0.07);margin-bottom:12px;overflow:hidden;cursor:pointer;position:relative}
+.bal-top{display:flex;align-items:center;padding:12px 10px 12px 16px;gap:8px}
+.bal-left{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
+.bal-lbl{font-size:10px;color:var(--muted);font-weight:500;margin-bottom:3px}
+.bal-amt{font-size:21px;font-weight:800;color:var(--text);letter-spacing:-0.5px;white-space:nowrap}
+.bal-plus{position:absolute;top:10px;right:164px;width:24px;height:24px;border-radius:50%;background:var(--blue);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2}
+.disc-btn{flex-shrink:0;width:148px;display:flex;align-items:center;gap:7px;border-radius:12px;padding:8px 10px 8px 8px;border:none;cursor:pointer;position:relative;overflow:hidden;box-shadow:none;background-color:#0112FE;background-image:linear-gradient(135deg,#0112FE 0%,#1a30ee 50%,#0020d0 100%)}
+.disc-btn::before{content:'';position:absolute;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,0.10);right:-14px;top:-20px;pointer-events:none;z-index:0}
+.disc-btn::after{content:'';position:absolute;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.06);left:-8px;bottom:-12px;pointer-events:none;z-index:0}
+.disc-shine{position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(180deg,rgba(255,255,255,0.16),transparent);pointer-events:none;z-index:0}
+.disc-icon-box{width:30px;height:30px;border-radius:8px;background:rgba(0,0,0,0.20);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1}
+.disc-text{position:relative;z-index:1;min-width:0}
+.disc-title{font-size:11px;font-weight:800;color:#fff;white-space:nowrap;line-height:1.2}
+.disc-sub{font-size:8.5px;color:rgba(255,255,255,0.72);white-space:nowrap;margin-top:1px}
+.section-card{background:var(--card);border-radius:18px;padding:14px 16px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(1,18,254,0.05);margin-bottom:12px}
+.sec-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sec-title{font-size:13px;font-weight:700;color:var(--text)}
+.sec-viewall{font-size:11px;font-weight:700;color:var(--blue);cursor:pointer}
+.qs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.qs-item{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.qs-icon-wrap{position:relative;width:52px;height:52px}
+.qs-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;transition:transform 0.15s}
+.qs-item:active .qs-icon{transform:scale(0.88)}
+.qs-icon.prepaid{background:#EEF0FF;border:1px solid #d0d5ff}
+.qs-icon.dth{background:#FFF4E0;border:1px solid #ffdfa0}
+.qs-icon.elec{background:#FFFBE0;border:1px solid #ffe980}
+.qs-icon.fastag{background:#E8FFF3;border:1px solid #a0f0c8}
+.qs-label{font-size:10.5px;color:var(--text);font-weight:600;text-align:center}
+.qs-sub{font-size:8.5px;color:var(--muted);text-align:center;margin-top:-2px}
+.offer-dot{position:absolute;top:-3px;right:-3px;width:14px;height:14px;border-radius:50%;background:#FF3B30;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:7px;color:#fff;font-weight:800}
+.qs-wide-scroll{overflow-x:auto}.qs-wide-scroll::-webkit-scrollbar{display:none}
+.qs-wide-inner{display:flex;gap:8px;width:max-content}
+.qs-wide-item{display:flex;align-items:center;gap:8px;border-radius:10px;padding:7px 12px;cursor:pointer;border:1px solid transparent;min-width:155px}
+.qs-wide-item.loan{background:#F0F8FF;border-color:#b8d8ff}.qs-wide-item.lpg{background:#FFF5F0;border-color:#ffc8a8}.qs-wide-item.broadbw{background:#F0E8FF;border-color:#d0a8ff}.qs-wide-item.insw{background:#FFE8F0;border-color:#ffb0cc}.qs-wide-item.trainw{background:#EEF0FF;border-color:#c0c8ff}.qs-wide-item.waterw{background:#E8F8FF;border-color:#90d0f0}
+.qs-wide-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qs-wide-item.loan .qs-wide-icon{background:#dbeeff;border:1px solid #a8d0ff}.qs-wide-item.lpg .qs-wide-icon{background:#ffe8dc;border:1px solid #ffb890}.qs-wide-item.broadbw .qs-wide-icon{background:#e8d8ff;border:1px solid #c090ff}.qs-wide-item.insw .qs-wide-icon{background:#ffd0e4;border:1px solid #ff90b8}.qs-wide-item.trainw .qs-wide-icon{background:#d8e0ff;border:1px solid #a0b0ff}.qs-wide-item.waterw .qs-wide-icon{background:#c8e8ff;border:1px solid #80c8f0}
+.qs-wide-lbl{font-size:10px;font-weight:700;line-height:1.2}.qs-wide-item.loan .qs-wide-lbl{color:#0050a0}.qs-wide-item.lpg .qs-wide-lbl{color:#a03000}.qs-wide-item.broadbw .qs-wide-lbl{color:#6020a0}.qs-wide-item.insw .qs-wide-lbl{color:#a0004a}.qs-wide-item.trainw .qs-wide-lbl{color:#2030a0}.qs-wide-item.waterw .qs-wide-lbl{color:#004880}
+.qs-wide-sub{font-size:8px;color:var(--muted);margin-top:1px}
+.dues-section{background:var(--card);border-radius:14px;padding:8px 12px;border:1px solid var(--border);margin-bottom:12px}
+.dues-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.dues-scroll{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}.dues-scroll::-webkit-scrollbar{display:none}
+.due-card{flex-shrink:0;min-width:150px;border-radius:8px;padding:6px 10px;border:1px solid transparent;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer}
+.due-card.elec{background:#FFFBE0;border-color:#ffe066}.due-card.mobile{background:#EEF0FF;border-color:#c0c8ff}.due-card.water{background:#E8F8FF;border-color:#90d0f0}.due-card.gas{background:#FFF0E8;border-color:#ffc090}.due-card.dth2{background:#F0FFF4;border-color:#90e0a8}
+.due-main{display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+.due-icon{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.due-card.elec .due-icon{background:#fff8c0}.due-card.mobile .due-icon{background:#dde0ff}.due-card.water .due-icon{background:#c0e8ff}.due-card.gas .due-icon{background:#ffe0c0}.due-card.dth2 .due-icon{background:#c0f0d0}
+.due-name{font-size:10px;font-weight:700;white-space:nowrap}
+.due-card.elec .due-name{color:#7a6000}.due-card.mobile .due-name{color:#0112FE}.due-card.water .due-name{color:#005080}.due-card.gas .due-name{color:#803000}.due-card.dth2 .due-name{color:#006030}
+.due-right{display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0;gap:1px}
+.due-amt{font-size:12px;font-weight:800;color:var(--text)}.due-date{font-size:8px;color:var(--muted)}
+.due-dots{background:none;border:none;padding:2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5px;flex-shrink:0}
+.due-dots span{width:3px;height:3px;border-radius:50%;background:#bbb;display:block}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cat-card{border-radius:14px;padding:11px 10px;cursor:pointer;display:flex;align-items:center;gap:9px;border:1px solid transparent;transition:transform 0.15s}.cat-card:active{transform:scale(0.97)}
+.cat-card.bills{background:#EEF0FF;border-color:#d0d5ff}.cat-card.gift{background:#FFF4E0;border-color:#ffdfa0}.cat-card.deals{background:#E8FFF3;border-color:#a0f0c8}.cat-card.refer{background:#FFF0F0;border-color:#ffc8c8}
+.cat-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff}
+.cat-card.bills .cat-icon{border:1px solid #d0d5ff}.cat-card.gift .cat-icon{border:1px solid #ffdfa0}.cat-card.deals .cat-icon{border:1px solid #a0f0c8}.cat-card.refer .cat-icon{border:1px solid #ffc8c8}
+.cat-body{flex:1;min-width:0}
+.cat-name{font-size:10.5px;font-weight:700;margin-bottom:1px}.cat-card.bills .cat-name{color:#0112FE}.cat-card.gift .cat-name{color:#8B5E00}.cat-card.deals .cat-name{color:#005e2e}.cat-card.refer .cat-name{color:#c0001a}
+.cat-desc{font-size:8.5px;color:var(--muted);margin-bottom:4px}
+.cat-discount{font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px;display:inline-block}
+.cat-card.bills .cat-discount{background:#0112FE;color:#fff}.cat-card.gift .cat-discount{background:#ff9500;color:#fff}.cat-card.deals .cat-discount{background:#00875A;color:#fff}.cat-card.refer .cat-discount{background:#c0001a;color:#fff}
+.sav-section{border-radius:18px;overflow:hidden;margin-bottom:12px}
+.sav-header-bg{background:linear-gradient(135deg,#1A1A2E,#16213E,#0F3460);padding:14px 16px 38px;position:relative;overflow:hidden}
+.sav-header-bg::before{content:'';position:absolute;width:150px;height:150px;border-radius:50%;background:rgba(255,215,0,0.06);right:-30px;top:-50px}
+.coin-dec{position:absolute;font-size:20px;opacity:0.22}
+.sav-top-row{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1}
+.sav-left h3{font-size:15px;font-weight:800;color:#fff;margin-bottom:3px}.sav-left h3 span{color:#FFD700}
+.sav-left p{font-size:10px;color:rgba(255,255,255,0.6);line-height:1.4}
+.sav-badges{display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+.sav-badge-trending{background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:3px 9px;font-size:9px;font-weight:700;color:#FFD700}
+.sav-badge-safe{background:rgba(0,255,136,0.12);border:1px solid rgba(0,255,136,0.25);border-radius:20px;padding:3px 9px;font-size:9px;font-weight:700;color:#00ff88}
+.sav-cards-wrap{background:var(--card);border-radius:14px 14px 18px 18px;margin:-24px 12px 0;padding:12px 10px;border:1px solid var(--border);box-shadow:0 4px 16px rgba(0,0,0,0.10);position:relative;z-index:2}
+.sav-cards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sc{border-radius:12px;padding:10px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border:1px solid transparent;transition:transform 0.15s}.sc:active{transform:scale(0.94)}
+.sc.gold{background:linear-gradient(160deg,#FFFBEE,#FFF3C0);border-color:#FFE066}.sc.silver{background:linear-gradient(160deg,#F4F6FF,#E8ECFF);border-color:#c0c8ff}.sc.fd{background:linear-gradient(160deg,#F0FFF8,#D8FFEc);border-color:#88eec0}
+.sc-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0}
+.sc.gold .sc-icon{background:rgba(255,210,0,0.15);border:1.5px solid #FFD700}.sc.silver .sc-icon{background:rgba(180,190,255,0.25);border:1.5px solid #c0c8ff}.sc.fd .sc-icon{background:rgba(0,200,130,0.12);border:1.5px solid #88eec0}
+.sc-hot{position:absolute;top:-4px;right:-4px;background:#FF3B30;color:#fff;font-size:6px;font-weight:800;padding:2px 3px;border-radius:5px;border:1px solid #fff}
+.sc-name{font-size:10px;font-weight:700;line-height:1}.sc.gold .sc-name{color:#7a5500}.sc.silver .sc-name{color:#1a2ab0}.sc.fd .sc-name{color:#005e38}
+.sc-val{font-size:12px;font-weight:800;line-height:1}.sc.gold .sc-val{color:#b07800}.sc.silver .sc-val{color:#1a2ab0}.sc.fd .sc-val{color:#005e38}
+.sc-lbl{font-size:8px;color:var(--muted)}
+.ret-bar{width:100%;height:3px;border-radius:2px;overflow:hidden;background:rgba(0,0,0,0.06)}
+.sc.gold .ret-bar-fill{height:100%;background:#FFD700;width:72%}.sc.silver .ret-bar-fill{height:100%;background:#8090ff;width:58%}.sc.fd .ret-bar-fill{height:100%;background:#00c880;width:82%}
+.sc-btn-gold{background:linear-gradient(90deg,#FFD700,#FFA500);color:#3a1a00;border:none;border-radius:20px;padding:5px 0;font-size:9px;font-weight:800;cursor:pointer;width:100%}
+.sc-btn-silver{background:linear-gradient(90deg,#8090ff,#6070ee);color:#fff;border:none;border-radius:20px;padding:5px 0;font-size:9px;font-weight:800;cursor:pointer;width:100%}
+.sc-btn-fd{background:linear-gradient(90deg,#00c880,#00a060);color:#fff;border:none;border-radius:8px;padding:5px 0;font-size:9px;font-weight:800;cursor:pointer;width:100%}
+/* GIFT CARDS */
+.gc-section{border-radius:18px;overflow:hidden;margin-bottom:12px}
+.gc-hdr-bg{background:linear-gradient(135deg,#FF6B35,#FF3CAC,#7B2FBE);padding:14px 16px 40px;position:relative;overflow:hidden}
+.gc-hdr-bg::before{content:'';position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,0.07);right:-30px;top:-40px}
+.gc-hdr-bg::after{content:'';position:absolute;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.05);left:-20px;bottom:-20px}
+.gc-hdr-inner{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1}
+.gc-hdr-left h3{font-size:15px;font-weight:800;color:#fff;margin-bottom:3px}.gc-hdr-left p{font-size:10px;color:rgba(255,255,255,0.8);line-height:1.4;max-width:180px}
+.gc-badges{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+.gc-hot{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:3px 9px;font-size:10px;font-weight:700;color:#fff}
+.gc-cnt{background:#FFD700;border-radius:20px;padding:3px 9px;font-size:9px;font-weight:800;color:#7a3500}
+.gc-viewall-btn{position:relative;z-index:1;margin-top:8px;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;color:#fff;cursor:pointer}
+.gc-body{background:var(--card);border-radius:14px 14px 18px 18px;margin:-22px 12px 0;padding:12px 10px;border:1px solid var(--border);box-shadow:0 4px 14px rgba(0,0,0,0.08);position:relative;z-index:2}
+.gc-cards-scroll{display:flex;gap:9px;overflow-x:auto;padding-bottom:8px}.gc-cards-scroll::-webkit-scrollbar{display:none}
+.gc-brand-card{flex-shrink:0;width:120px;border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid #eee;transition:transform 0.15s}.gc-brand-card:active{transform:scale(0.96)}.gc-brand-card.featured{width:140px}
+.gc-brand-top{height:64px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.gc-brand-card.featured .gc-brand-top{height:78px}
+.gc-brand-top::after{content:'';position:absolute;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.12);right:-8px;top:-8px;pointer-events:none}
+.gc-brand-card.amazon .gc-brand-top{background:linear-gradient(135deg,#FF9900,#FFBA33)}.gc-brand-card.flipkart .gc-brand-top{background:linear-gradient(135deg,#2874F0,#5A9BF8)}.gc-brand-card.swiggy .gc-brand-top{background:linear-gradient(135deg,#FC8019,#FDAA60)}.gc-brand-card.zomato .gc-brand-top{background:linear-gradient(135deg,#CB202D,#E85C67)}.gc-brand-card.netflix .gc-brand-top{background:linear-gradient(135deg,#E50914,#FF4B57)}.gc-brand-card.myntra .gc-brand-top{background:linear-gradient(135deg,#FF3F6C,#FF7E9E)}
+.gc-emoji{font-size:26px;position:relative;z-index:1}.gc-brand-card.featured .gc-emoji{font-size:32px}
+.gc-disc-pill{position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.5);color:#fff;font-size:8px;font-weight:800;padding:2px 6px;border-radius:20px;z-index:2}
+.gc-brand-bot{background:#fff;padding:7px 8px}.gc-brand-nm{font-size:10px;font-weight:700;color:var(--text);margin-bottom:1px}.gc-brand-sv{font-size:8.5px;color:#00875A;font-weight:600}
+.gc-brand-strip{border-top:1px solid var(--border);padding-top:8px;display:flex;gap:10px;overflow-x:auto;padding-bottom:2px}.gc-brand-strip::-webkit-scrollbar{display:none}
+.gs-item{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;cursor:pointer}
+.gs-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px}
+.gs-name{font-size:8.5px;color:var(--muted);font-weight:600}.gs-off{font-size:8.5px;font-weight:700;color:#FF3CAC}
+/* DEALS */
+.deals-section{border-radius:18px;overflow:hidden;margin-bottom:12px}
+.deals-hdr{background:linear-gradient(135deg,#FF6B00,#FF3CAC,#c000a0);padding:14px 16px 32px;position:relative;overflow:hidden}
+.deals-hdr::before{content:'';position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.08);right:-20px;top:-30px}
+.deals-hdr::after{content:'';position:absolute;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,0.06);left:-15px;bottom:-15px}
+.deals-hdr-row{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1}
+.deals-h{font-size:15px;font-weight:800;color:#fff;margin-bottom:3px}.deals-s{font-size:10px;color:rgba(255,255,255,0.75)}
+.deals-badges{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+.deals-b1{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:3px 9px;font-size:10px;font-weight:700;color:#fff}
+.deals-b2{background:#FFD700;border-radius:20px;padding:3px 9px;font-size:9px;font-weight:800;color:#7a3500}
+.deals-body{background:var(--card);border-radius:14px 14px 18px 18px;margin:-20px 10px 0;padding:12px 10px;border:1px solid var(--border);box-shadow:0 4px 14px rgba(0,0,0,0.08);position:relative;z-index:2}
+.deals-tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:10px;padding-bottom:2px}.deals-tabs::-webkit-scrollbar{display:none}
+.d-tab{flex-shrink:0;font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;border:1.5px solid transparent;white-space:nowrap;transition:all 0.2s}
+.d-tab.act{background:var(--blue);color:#fff;border-color:var(--blue)}.d-tab.idle{background:#F0F2FF;color:var(--muted);border-color:#d0d5ff}
+.deals-grid-scroll{overflow-x:auto;padding-bottom:4px}.deals-grid-scroll::-webkit-scrollbar{display:none}
+.deals-grid{display:grid;grid-template-rows:1fr 1fr;grid-auto-flow:column;grid-auto-columns:148px;gap:8px;width:max-content}
+.d-tile{width:148px;border-radius:12px;padding:10px;cursor:pointer;border:1px solid transparent;display:flex;flex-direction:column;transition:transform 0.15s}.d-tile:active{transform:scale(0.96)}
+.d-tile.t1{background:linear-gradient(135deg,#FFF5F5,#FFE8E8);border-color:#FFCCCC}.d-tile.t2{background:linear-gradient(135deg,#F0F2FF,#E4E8FF);border-color:#C8CFFF}.d-tile.t3{background:linear-gradient(135deg,#FFFAF0,#FFF0D0);border-color:#FFE0A0}.d-tile.t4{background:linear-gradient(135deg,#F0FFF8,#D8FFec);border-color:#88eec0}.d-tile.t5{background:linear-gradient(135deg,#FFF0F5,#FFE0EE);border-color:#FFB0D0}.d-tile.t6{background:linear-gradient(135deg,#F5F0FF,#EDE0FF);border-color:#C8A0FF}.d-tile.t7{background:linear-gradient(135deg,#F0F8FF,#DCF0FF);border-color:#90D0FF}.d-tile.t8{background:linear-gradient(135deg,#FFFBF0,#FFF3D0);border-color:#FFE090}
+.d-tile-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.d-tile-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.d-tile.t1 .d-tile-icon{background:rgba(255,65,108,0.12)}.d-tile.t2 .d-tile-icon{background:rgba(71,118,230,0.12)}.d-tile.t3 .d-tile-icon{background:rgba(247,151,30,0.12)}.d-tile.t4 .d-tile-icon{background:rgba(0,200,128,0.12)}.d-tile.t5 .d-tile-icon{background:rgba(255,50,100,0.12)}.d-tile.t6 .d-tile-icon{background:rgba(120,50,200,0.12)}.d-tile.t7 .d-tile-icon{background:rgba(0,100,200,0.12)}.d-tile.t8 .d-tile-icon{background:rgba(200,140,0,0.12)}
+.d-disc{font-size:14px;font-weight:800;line-height:1}
+.d-tile.t1 .d-disc{color:#c0001a}.d-tile.t2 .d-disc{color:#3a00a0}.d-tile.t3 .d-disc{color:#7a5000}.d-tile.t4 .d-disc{color:#005e38}.d-tile.t5 .d-disc{color:#a0003a}.d-tile.t6 .d-disc{color:#5a0090}.d-tile.t7 .d-disc{color:#003a90}.d-tile.t8 .d-disc{color:#6a4000}
+.d-hot{display:inline-block;background:#FF3B30;color:#fff;font-size:7px;font-weight:800;padding:2px 5px;border-radius:20px;margin-bottom:3px;width:fit-content}
+.d-name{font-size:10px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:2px}
+.d-desc{font-size:8.5px;color:var(--muted);line-height:1.3;flex:1}
+.d-grab{border:none;border-radius:8px;padding:6px 0;font-size:9px;font-weight:700;cursor:pointer;width:100%;text-align:center;margin-top:8px;flex-shrink:0}
+.d-tile.t1 .d-grab{background:#FFE8E8;color:#c0001a}.d-tile.t2 .d-grab{background:#E4E8FF;color:#3a00a0}.d-tile.t3 .d-grab{background:#FFF0D0;color:#7a5000}.d-tile.t4 .d-grab{background:#D8FFec;color:#005e38}.d-tile.t5 .d-grab{background:#FFE0EE;color:#a0003a}.d-tile.t6 .d-grab{background:#EDE0FF;color:#5a0090}.d-tile.t7 .d-grab{background:#DCF0FF;color:#003a90}.d-tile.t8 .d-grab{background:#FFF3D0;color:#6a4000}
+/* REFER */
+.wm-footer{background:var(--bg);padding:14px 0 16px;overflow:hidden}
+.wm-row{white-space:nowrap;overflow:hidden;margin-bottom:7px}
+.wm-r1{display:flex;animation:scrollLeft 18s linear infinite}.wm-r2{display:flex;animation:scrollRight 22s linear infinite}
+@keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes scrollRight{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+.wm-word{display:inline-block;padding:0 14px;font-weight:900;user-select:none;flex-shrink:0}
+.wm-r1 .wm-word{font-size:24px;color:rgba(1,18,254,0.13);text-transform:uppercase;font-style:italic}
+.wm-r1 .wm-word.accent{font-size:13px;color:rgba(1,18,254,0.10);text-transform:lowercase;font-style:normal;letter-spacing:4px}
+.wm-r2 .wm-word{font-size:12px;color:rgba(0,0,0,0.14);letter-spacing:5px;text-transform:uppercase;font-family:Georgia,serif}
+.wm-r2 .wm-word.bold{font-size:18px;font-weight:900;color:rgba(1,18,254,0.10);letter-spacing:0}
+@keyframes goldPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,180,0,0.5)}50%{box-shadow:0 0 0 8px rgba(255,180,0,0)}}
+@keyframes coinSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.bottom-nav{background:#fff;display:flex;align-items:flex-end;justify-content:space-around;padding:0 4px 18px;height:80px;border-top:1.5px solid #eee;position:sticky;bottom:0;z-index:100}
+.bn-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;flex:1;padding-top:10px}
+.bn-icon-box{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.bn-item.act .bn-icon-box{background:#EEF0FF}.bn-lbl{font-size:9.5px;color:#aaa;font-weight:600}.bn-item.act .bn-lbl{color:#0112FE;font-weight:700}
+.bn-mid{flex:1.2;display:flex;flex-direction:column;align-items:center;cursor:pointer;margin-top:-20px}
+.bn-gold-wrap{position:relative;width:54px;height:54px;display:flex;align-items:center;justify-content:center}
+.bn-ring{position:absolute;inset:-4px;border-radius:50%;border:2px dashed rgba(255,180,0,0.55);animation:coinSpin 16s linear infinite}
+.bn-gold-btn{width:54px;height:54px;border-radius:50%;background:linear-gradient(145deg,#FFD700,#FF9500);border:3px solid #fff;box-shadow:0 6px 20px rgba(255,150,0,0.45);display:flex;align-items:center;justify-content:center;animation:goldPulse 2s ease-in-out infinite}
+.bn-gold-lbl{font-size:9px;font-weight:800;color:#c07800;margin-top:5px}
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;transition:background 0.3s;z-index:200;border-radius:36px;overflow:hidden}
+.overlay.show{background:rgba(0,0,0,0.5);pointer-events:all}
+.bottom-sheet{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:22px 22px 0 0;padding:0 0 24px;transform:translateY(100%);transition:transform 0.35s cubic-bezier(.4,0,.2,1);z-index:201}
+.overlay.show .bottom-sheet{transform:translateY(0)}
+.bs-handle{width:40px;height:4px;border-radius:2px;background:#e0e0e0;margin:12px auto 16px}
+.bs-close{position:absolute;top:12px;right:16px;width:30px;height:30px;border-radius:50%;background:#f5f5f5;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.bs-header{display:flex;align-items:center;padding:0 18px 12px}
+.bs-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.bs-biller{display:flex;align-items:center;gap:12px;padding:0 18px 14px}
+.bs-biller-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.bs-biller-name{font-size:14px;font-weight:800;color:var(--text)}.bs-biller-num{font-size:11px;color:var(--muted);margin-top:2px}
+.bs-due-row{display:flex;align-items:center;justify-content:space-between;padding:0 18px 6px}
+.bs-due-lbl{font-size:11px;color:var(--muted);font-weight:500}.bs-due-date{font-size:11px;font-weight:700;color:var(--text)}
+.bs-amt-wrap{text-align:center;padding:12px 18px 16px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:0 18px 16px}
+.bs-amt-lbl{font-size:10px;color:var(--muted);font-weight:500;margin-bottom:4px}.bs-amt{font-size:36px;font-weight:800;color:var(--text);letter-spacing:-1px}.bs-amt-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.bs-actions{padding:0 18px;display:flex;flex-direction:column;gap:10px;align-items:center}
+.bs-pay-btn{width:100%;background:var(--blue);color:#fff;border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.bs-skip{font-size:12px;color:var(--muted);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#222;color:#fff;font-size:12px;font-weight:600;padding:8px 18px;border-radius:20px;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;z-index:999}
+.toast.show{opacity:1}
+</style>
+
+<div class="wrap"><div class="phone" id="phone">
+  <div class="sbar"><span>9:41</span><span style="font-weight:700">EG Payment</span><span>&#x1F4F6; &#x1F50B;</span></div>
+  <div style="background:var(--blue)">
+    <div class="hdr-row">
+      <div class="profile-pill" onclick="toast('Profile')"><div class="av">JY</div><span>Jitendra</span></div>
+      <div class="hdr-right">
+        <div class="hdr-icon-btn" onclick="toast('Support')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.8"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 1.5-2.5 2-2.5 3.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="#fff"/></svg></div>
+        <div class="hdr-icon-btn" onclick="toast('WhatsApp')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.5 3.5A12 12 0 003.5 17.5L2 22l4.5-1.5A12 12 0 0020.5 3.5z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 11c.3.6.8 1.2 1.4 1.6.6.4 1.3.7 2 .7.4 0 1-.2 1.3-.5l.5-.5c.2-.2.2-.5 0-.7l-1-1c-.2-.2-.5-.2-.7 0l-.3.3c-.5-.3-1-.7-1.3-1.2l.3-.3c.2-.2.2-.5 0-.7l-1-1c-.2-.2-.5-.2-.7 0l-.5.5C9.1 9.5 9 10 9 11z" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="coins-pill" onclick="toast('EG Coins')"><div class="coin-icon">C</div><span>2,450</span></div>
+      </div>
+    </div>
+    <div class="slider-wrap"><div class="slides" id="slides">
+      <div class="slide"><div class="slide-art"><div class="slide-badge"><div class="pct">10%</div><div class="lbl">Rewards on<br>Recharge</div></div></div><h2>Get 10% Rewards on Mobile Recharge</h2><p>Earn on every recharge</p><button class="slide-btn" onclick="toast('Recharge')">Recharge Now &#8594;</button></div>
+      <div class="slide"><div class="slide-art"><div style="font-size:40px;opacity:0.9">&#x1F947;</div><div style="color:#FFD700;font-size:11px;font-weight:700;margin-top:4px">&#x20B9;6,920/g</div></div><h2>SIP in Gold from &#x20B9;10/day</h2><p>Grow your wealth</p><button class="slide-btn" onclick="toast('Gold')">Start SIP &#8594;</button></div>
+      <div class="slide"><div class="slide-art"><div style="font-size:40px;opacity:0.9">&#x1F381;</div><div style="color:#FFD700;font-size:11px;font-weight:700;margin-top:4px">UP TO 15% OFF</div></div><h2>Gift Cards up to 15% off</h2><p>50+ top brands</p><button class="slide-btn" onclick="toast('Gift Cards')">Shop Now &#8594;</button></div>
+      <div class="slide"><div class="slide-art"><div style="font-size:38px;opacity:0.9">&#x1F465;</div><div style="color:#FFD700;font-size:16px;font-weight:800;margin-top:4px">&#x20B9;250</div></div><h2>Refer &amp; Earn &#x20B9;250 Each</h2><p>Share &amp; earn instantly</p><button class="slide-btn" onclick="toast('Refer')">Invite Now &#8594;</button></div>
+    </div></div>
+    <div class="sdots"><div class="sdot active" onclick="goTo(0)"></div><div class="sdot" onclick="goTo(1)"></div><div class="sdot" onclick="goTo(2)"></div><div class="sdot" onclick="goTo(3)"></div></div>
+  </div>
+
+  <div class="white-body">
+    <!-- BALANCE -->
+    <div class="bal-section" onclick="toast('Wallet')">
+      <button class="bal-plus" onclick="event.stopPropagation();toast('Add Money')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+      <div class="bal-top">
+        <div class="bal-left"><div class="bal-lbl">Available Balance</div><div class="bal-amt">&#x20B9; 25,680.50</div></div>
+        <button class="disc-btn" style="background-color:#0112FE;background-image:linear-gradient(135deg,#0112FE 0%,#1a30ee 50%,#0020d0 100%);" onclick="event.stopPropagation();toast('Discount Chart')">
+          <div class="disc-shine"></div>
+          <div class="disc-icon-box"><svg width="17" height="17" viewBox="0 0 22 20" fill="none"><rect x="1" y="10" width="5" height="10" rx="1.5" fill="#FFD700"/><rect x="8.5" y="5" width="5" height="15" rx="1.5" fill="#FFD700" opacity="0.8"/><rect x="16" y="1" width="5" height="19" rx="1.5" fill="#FFD700" opacity="0.5"/></svg></div>
+          <div class="disc-text"><div class="disc-title">Discount Chart</div><div class="disc-sub">View all deals &#8594;</div></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- QUICK SERVICES -->
+    <div class="section-card">
+      <div class="sec-header"><span class="sec-title">Quick Services</span><span class="sec-viewall" onclick="toast('All')">View all</span></div>
+      <div class="qs-grid">
+        <div class="qs-item" onclick="toast('Prepaid')"><div class="qs-icon-wrap"><div class="qs-icon prepaid"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="7" y="2" width="10" height="20" rx="2" stroke="#0112FE" stroke-width="1.8"/><path d="M10 18h4" stroke="#0112FE" stroke-width="1.8" stroke-linecap="round"/><path d="M12 9v4m-2-2h4" stroke="#0112FE" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="offer-dot">%</div></div><div class="qs-label">Prepaid</div><div class="qs-sub">Recharge</div></div>
+        <div class="qs-item" onclick="toast('DTH')"><div class="qs-icon-wrap"><div class="qs-icon dth"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 7a8 8 0 0114 0" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round"/><path d="M8 10a4 4 0 018 0" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="13" r="1.5" fill="#F59E0B"/><path d="M12 14.5v3M9 21h6" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round"/></svg></div></div><div class="qs-label">DTH</div><div class="qs-sub">TV Recharge</div></div>
+        <div class="qs-item" onclick="toast('Electricity')"><div class="qs-icon-wrap"><div class="qs-icon elec"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11L10 22l9.5-12H13.5L13 2z" stroke="#EAB308" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div class="offer-dot">!</div></div><div class="qs-label">Electricity</div><div class="qs-sub">Bill Pay</div></div>
+        <div class="qs-item" onclick="toast('FASTag')"><div class="qs-icon-wrap"><div class="qs-icon fastag"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 17l4-10h10l4 10H3z" stroke="#10B981" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 17v2h10v-2" stroke="#10B981" stroke-width="1.8" stroke-linecap="round"/><path d="M5 12h14" stroke="#10B981" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="17" r="1" fill="#10B981"/><circle cx="16" cy="17" r="1" fill="#10B981"/></svg></div></div><div class="qs-label">FASTag</div><div class="qs-sub">Toll Recharge</div></div>
+      </div>
+      <div class="qs-wide-scroll"><div class="qs-wide-inner">
+        <div class="qs-wide-item loan" onclick="toast('Loan')"><div class="qs-wide-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="14" rx="2" stroke="#0050a0" stroke-width="1.8"/><path d="M3 10h18" stroke="#0050a0" stroke-width="1.8" stroke-linecap="round"/><path d="M7 14h4M7 17h6" stroke="#0050a0" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="qs-wide-lbl">Loan Repayment</div><div class="qs-wide-sub">Pay EMIs fast</div></div></div>
+        <div class="qs-wide-item lpg" onclick="toast('LPG')"><div class="qs-wide-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M8 3h8l2 5v11a1 1 0 01-1 1H7a1 1 0 01-1-1V8l2-5z" stroke="#a03000" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 8h12" stroke="#a03000" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="14" r="2" stroke="#a03000" stroke-width="1.5"/></svg></div><div><div class="qs-wide-lbl">LPG Booking</div><div class="qs-wide-sub">Book cylinder</div></div></div>
+        <div class="qs-wide-item broadbw" onclick="toast('Broadband')"><div class="qs-wide-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12.5a9 9 0 0114 0" stroke="#6020a0" stroke-width="1.8" stroke-linecap="round"/><path d="M8 15.5a5 5 0 018 0" stroke="#6020a0" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="18.5" r="1.5" fill="#6020a0"/></svg></div><div><div class="qs-wide-lbl">Broadband</div><div class="qs-wide-sub">Pay bill</div></div></div>
+        <div class="qs-wide-item insw" onclick="toast('Insurance')"><div class="qs-wide-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4-3 7.5-7 9-4-1.5-7-5-7-9V6l7-3z" stroke="#a0004a" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#a0004a" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="qs-wide-lbl">Insurance</div><div class="qs-wide-sub">Premium pay</div></div></div>
+        <div class="qs-wide-item trainw" onclick="toast('Train')"><div class="qs-wide-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="14" rx="4" stroke="#2030a0" stroke-width="1.8"/><path d="M4 11h16" stroke="#2030a0" stroke-width="1.8" stroke-linecap="round"/><path d="M8 17l-2 4M16 17l2 4" stroke="#2030a0" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="qs-wide-lbl">Train Ticket</div><div class="qs-wide-sub">Book IRCTC</div></div></div>
+        <div class="qs-wide-item waterw" onclick="toast('Water')"><div class="qs-wide-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 5 10 5 15a7 7 0 0014 0c0-5-7-13-7-13z" stroke="#004880" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><div class="qs-wide-lbl">Water Bill</div><div class="qs-wide-sub">Pay now</div></div></div>
+      </div></div>
+    </div>
+
+    <!-- DUES -->
+    <div class="dues-section">
+      <div class="dues-header"><span class="sec-title" style="font-size:12px">Upcoming Bills</span><span class="sec-viewall" onclick="toast('All dues')" style="font-size:10px">View all</span></div>
+      <div class="dues-scroll">
+        <div class="due-card elec"><div class="due-main"><div class="due-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11L10 22l9.5-12H13.5L13 2z" stroke="#7a6000" stroke-width="2.5" stroke-linejoin="round"/></svg></div><div class="due-name">Electricity</div></div><div class="due-right"><div class="due-amt">&#x20B9;1,240</div><div class="due-date">May 5</div></div><button class="due-dots" onclick="event.stopPropagation();openSheet('Electricity Board','⚡','May 5, 2026','1,240','ELEC-002938')"><span></span><span></span><span></span></button></div>
+        <div class="due-card mobile"><div class="due-main"><div class="due-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="7" y="2" width="10" height="20" rx="2" stroke="#0112FE" stroke-width="2.5"/></svg></div><div class="due-name">Jio Postpaid</div></div><div class="due-right"><div class="due-amt">&#x20B9;499</div><div class="due-date">May 8</div></div><button class="due-dots" onclick="event.stopPropagation();openSheet('Jio Postpaid','📱','May 8, 2026','499','9876543210')"><span></span><span></span><span></span></button></div>
+        <div class="due-card water"><div class="due-main"><div class="due-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 5 10 5 15a7 7 0 0014 0c0-5-7-13-7-13z" stroke="#005080" stroke-width="2.5" stroke-linejoin="round"/></svg></div><div class="due-name">Water Bill</div></div><div class="due-right"><div class="due-amt">&#x20B9;320</div><div class="due-date">May 12</div></div><button class="due-dots" onclick="event.stopPropagation();openSheet('Water Authority','💧','May 12, 2026','320','WB-00441')"><span></span><span></span><span></span></button></div>
+        <div class="due-card gas"><div class="due-main"><div class="due-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M8 3h8l2 5v11H6V8l2-5z" stroke="#803000" stroke-width="2.5" stroke-linejoin="round"/></svg></div><div class="due-name">Gas Pipeline</div></div><div class="due-right"><div class="due-amt">&#x20B9;680</div><div class="due-date">May 15</div></div><button class="due-dots" onclick="event.stopPropagation();openSheet('Gas Pipeline','🔥','May 15, 2026','680','GAS-0087122')"><span></span><span></span><span></span></button></div>
+        <div class="due-card dth2"><div class="due-main"><div class="due-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 8a8 8 0 0114 0" stroke="#006030" stroke-width="2.5" stroke-linecap="round"/><circle cx="12" cy="12" r="2" fill="#006030"/></svg></div><div class="due-name">Tata Play</div></div><div class="due-right"><div class="due-amt">&#x20B9;399</div><div class="due-date">May 20</div></div><button class="due-dots" onclick="event.stopPropagation();openSheet('Tata Play DTH','📡','May 20, 2026','399','TP-8812334')"><span></span><span></span><span></span></button></div>
+      </div>
+    </div>
+
+    <!-- EXPLORE -->
+    <div class="section-card">
+      <div class="sec-header" style="margin-bottom:10px"><span class="sec-title">Explore</span></div>
+      <div class="cat-grid">
+        <div class="cat-card bills" onclick="toast('Bills')"><div class="cat-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M20 12V22H4V12" stroke="#0112FE" stroke-width="1.8" stroke-linecap="round"/><path d="M22 7H2v5h20V7z" stroke="#0112FE" stroke-width="1.8"/><path d="M12 22V7" stroke="#0112FE" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="cat-body"><div class="cat-name">Recharge &amp; Bills</div><div class="cat-desc">Mobile, DTH &amp; more</div><div class="cat-discount">5% off</div></div></div>
+        <div class="cat-card gift" onclick="toast('Gift Cards')"><div class="cat-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M20 12V22H4V12" stroke="#8B5E00" stroke-width="1.8" stroke-linecap="round"/><path d="M22 7H2v5h20V7z" stroke="#8B5E00" stroke-width="1.8"/><path d="M12 22V7M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" stroke="#8B5E00" stroke-width="1.8"/></svg></div><div class="cat-body"><div class="cat-name">Gift Cards</div><div class="cat-desc">50+ brands</div><div class="cat-discount">15% off</div></div></div>
+        <div class="cat-card deals" onclick="toast('Deals')"><div class="cat-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#005e2e" stroke-width="1.8"/><path d="M8.5 15.5l7-7M9.5 9.5h.01M14.5 14.5h.01" stroke="#005e2e" stroke-width="2" stroke-linecap="round"/></svg></div><div class="cat-body"><div class="cat-name">Deals</div><div class="cat-desc">Best cashback</div><div class="cat-discount">Up to 30%</div></div></div>
+        <div class="cat-card refer" onclick="toast('Refer')"><div class="cat-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="7" r="3" stroke="#c0001a" stroke-width="1.8"/><path d="M3 20c0-4 2.7-6 6-6" stroke="#c0001a" stroke-width="1.8" stroke-linecap="round"/><circle cx="17" cy="10" r="3" stroke="#c0001a" stroke-width="1.8"/><path d="M14 21c0-3 1.3-5 3-5s3 2 3 5" stroke="#c0001a" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="cat-body"><div class="cat-name">Refer &amp; Earn</div><div class="cat-desc">Per invite</div><div class="cat-discount">&#x20B9;250</div></div></div>
+      </div>
+    </div>
+
+    <!-- SAVINGS -->
+    <div class="sav-section">
+      <div class="sav-header-bg"><div class="coin-dec" style="right:8px;top:8px">&#x1FA99;</div><div class="coin-dec" style="right:50px;top:28px;font-size:14px">&#x1F4B0;</div>
+        <div class="sav-top-row"><div class="sav-left"><h3>&#x1F4C8; Grow Your <span>Wealth</span></h3><p>Real-time gold, silver &amp; guaranteed FD returns</p></div><div class="sav-badges"><div class="sav-badge-trending">&#x1F4C8; Trending</div><div class="sav-badge-safe">&#x2705; Safe</div></div></div>
+      </div>
+      <div class="sav-cards-wrap"><div class="sav-cards-row">
+        <div class="sc gold" onclick="toast('Gold')"><div class="sc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="#b07800" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#b07800" stroke-width="1.8" stroke-linecap="round"/></svg><div class="sc-hot">LIVE</div></div><div class="sc-name">Digital Gold</div><div class="sc-val">&#x20B9;6,920<span style="font-size:7px">/g</span></div><div class="sc-lbl">Live Price</div><div class="ret-bar"><div class="ret-bar-fill"></div></div><button class="sc-btn-gold" onclick="event.stopPropagation();toast('Buy Gold')">&#x1F947; Buy</button></div>
+        <div class="sc silver" onclick="toast('Silver')"><div class="sc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" stroke="#1a2ab0" stroke-width="1.8" stroke-linejoin="round"/></svg><div class="sc-hot">LIVE</div></div><div class="sc-name">Digital Silver</div><div class="sc-val">&#x20B9;84<span style="font-size:7px">/g</span></div><div class="sc-lbl">Live Price</div><div class="ret-bar"><div class="ret-bar-fill"></div></div><button class="sc-btn-silver" onclick="event.stopPropagation();toast('Buy Silver')">&#x1F948; Buy</button></div>
+        <div class="sc fd" onclick="toast('FD')"><div class="sc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="14" rx="2" stroke="#005e38" stroke-width="1.8"/><path d="M3 10h18" stroke="#005e38" stroke-width="1.8" stroke-linecap="round"/><path d="M7 14h4M7 17h6" stroke="#005e38" stroke-width="1.8" stroke-linecap="round"/><path d="M8 6V4M16 6V4" stroke="#005e38" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sc-name">Fixed Deposit</div><div class="sc-val">8.15%</div><div class="sc-lbl">p.a. returns</div><div class="ret-bar"><div class="ret-bar-fill"></div></div><button class="sc-btn-fd" onclick="event.stopPropagation();toast('Start FD')">&#x1F4B9; Start</button></div>
+      </div></div>
+    </div>
+
+    <!-- GIFT CARDS -->
+    <div class="gc-section">
+      <div class="gc-hdr-bg">
+        <div class="gc-hdr-inner"><div class="gc-hdr-left"><h3>&#x1F381; Gift Cards</h3><p>Exclusive discounts on 50+ top brands</p></div><div class="gc-badges"><div class="gc-hot">&#x1F525; Hot Deals</div><div class="gc-cnt">50+ Brands</div></div></div>
+        <div class="gc-viewall-btn" onclick="toast('All Gift Cards')">View All Gift Cards &#8594;</div>
+      </div>
+      <div class="gc-body">
+        <div class="gc-cards-scroll">
+          <div class="gc-brand-card amazon featured" onclick="toast('Amazon')"><div class="gc-brand-top"><div class="gc-disc-pill">10% OFF</div><span class="gc-emoji">&#x1F6CD;&#xFE0F;</span></div><div class="gc-brand-bot"><div class="gc-brand-nm">Amazon</div><div class="gc-brand-sv">Save &#x20B9;100 on &#x20B9;1000</div></div></div>
+          <div class="gc-brand-card flipkart" onclick="toast('Flipkart')"><div class="gc-brand-top"><div class="gc-disc-pill">8% OFF</div><span class="gc-emoji">&#x1F6D2;</span></div><div class="gc-brand-bot"><div class="gc-brand-nm">Flipkart</div><div class="gc-brand-sv">Save &#x20B9;80 on &#x20B9;1000</div></div></div>
+          <div class="gc-brand-card swiggy" onclick="toast('Swiggy')"><div class="gc-brand-top"><div class="gc-disc-pill">12% OFF</div><span class="gc-emoji">&#x1F374;</span></div><div class="gc-brand-bot"><div class="gc-brand-nm">Swiggy</div><div class="gc-brand-sv">Best for food orders</div></div></div>
+          <div class="gc-brand-card zomato" onclick="toast('Zomato')"><div class="gc-brand-top"><div class="gc-disc-pill">15% OFF</div><span class="gc-emoji">&#x1F355;</span></div><div class="gc-brand-bot"><div class="gc-brand-nm">Zomato</div><div class="gc-brand-sv">Max discount today</div></div></div>
+          <div class="gc-brand-card netflix" onclick="toast('Netflix')"><div class="gc-brand-top"><div class="gc-disc-pill">5% OFF</div><span class="gc-emoji">&#x1F3AC;</span></div><div class="gc-brand-bot"><div class="gc-brand-nm">Netflix</div><div class="gc-brand-sv">Stream &amp; save</div></div></div>
+          <div class="gc-brand-card myntra" onclick="toast('Myntra')"><div class="gc-brand-top"><div class="gc-disc-pill">7% OFF</div><span class="gc-emoji">&#x1F457;</span></div><div class="gc-brand-bot"><div class="gc-brand-nm">Myntra</div><div class="gc-brand-sv">Fashion savings</div></div></div>
+          <div class="gc-brand-card" style="background:linear-gradient(135deg,#FF3CAC,#7B2FBE);border:none" onclick="toast('All brands')"><div class="gc-brand-top" style="background:transparent;flex-direction:column;gap:2px"><span style="font-size:22px;color:#fff;font-weight:800">+45</span><span style="font-size:9px;color:rgba(255,255,255,0.8);font-weight:600">More</span></div><div class="gc-brand-bot" style="background:rgba(255,255,255,0.1)"><div class="gc-brand-nm" style="color:#fff">View All</div><div class="gc-brand-sv" style="color:rgba(255,255,255,0.7)">50+ brands</div></div></div>
+        </div>
+        <div class="gc-brand-strip">
+          <div class="gs-item" onclick="toast('Amazon')"><div class="gs-icon" style="background:#FFF8EE;border:1px solid #ffd090">&#x1F6CD;&#xFE0F;</div><div class="gs-name">Amazon</div><div class="gs-off">10% off</div></div>
+          <div class="gs-item" onclick="toast('Flipkart')"><div class="gs-icon" style="background:#FFF4E0;border:1px solid #ffdfa0">&#x1F6D2;</div><div class="gs-name">Flipkart</div><div class="gs-off">8% off</div></div>
+          <div class="gs-item" onclick="toast('Swiggy')"><div class="gs-icon" style="background:#FFF3E0;border:1px solid #ffc090">&#x1F374;</div><div class="gs-name">Swiggy</div><div class="gs-off">12% off</div></div>
+          <div class="gs-item" onclick="toast('Zomato')"><div class="gs-icon" style="background:#FFF0F0;border:1px solid #ffb0b0">&#x1F355;</div><div class="gs-name">Zomato</div><div class="gs-off">15% off</div></div>
+          <div class="gs-item" onclick="toast('Myntra')"><div class="gs-icon" style="background:#FFF0F5;border:1px solid #ffd0e8">&#x1F457;</div><div class="gs-name">Myntra</div><div class="gs-off">7% off</div></div>
+          <div class="gs-item" onclick="toast('Netflix')"><div class="gs-icon" style="background:#FFF0F0;border:1px solid #ffc0c0">&#x1F3AC;</div><div class="gs-name">Netflix</div><div class="gs-off">5% off</div></div>
+          <div class="gs-item" onclick="toast('More')"><div class="gs-icon" style="background:linear-gradient(135deg,#FF3CAC,#7B2FBE);border:none"><span style="font-size:13px;color:#fff;font-weight:800">+45</span></div><div class="gs-name">More</div><div class="gs-off" style="color:var(--blue)">Brands</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEALS — category tabs + aligned scrollable grid -->
+    <div class="deals-section">
+      <div class="deals-hdr">
+        <div class="deals-hdr-row">
+          <div><div class="deals-h">&#x1F3F7;&#xFE0F; Today's Deals</div><div class="deals-s">Tap category · Swipe for more</div></div>
+          <div class="deals-badges"><div class="deals-b1">&#x1F525; 50+ Live</div><div class="deals-b2">Today Only</div></div>
+        </div>
+      </div>
+      <div class="deals-body">
+        <div class="deals-tabs" id="dealTabs">
+          <div class="d-tab act" onclick="switchTab('all',this)">All Deals</div>
+          <div class="d-tab idle" onclick="switchTab('insurance',this)">Insurance</div>
+          <div class="d-tab idle" onclick="switchTab('food',this)">Food</div>
+          <div class="d-tab idle" onclick="switchTab('shopping',this)">Shopping</div>
+          <div class="d-tab idle" onclick="switchTab('health',this)">Health</div>
+          <div class="d-tab idle" onclick="switchTab('finance',this)">Finance</div>
+        </div>
+        <div class="deals-grid-scroll"><div class="deals-grid" id="dealsGrid"></div></div>
+      </div>
+    </div>
+
+    <!-- REFER -->
+    <div style="border-radius:18px;overflow:hidden;margin-bottom:12px;cursor:pointer" onclick="toast('Refer')">
+      <div style="background:linear-gradient(135deg,#0112FE,#1a30ee,#0a20cc);padding:18px 16px;position:relative;overflow:hidden">
+        <div style="position:absolute;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,0.06);right:-50px;top:-50px;pointer-events:none"></div>
+        <div style="position:absolute;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,0.04);left:-30px;bottom:-30px;pointer-events:none"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1">
+          <div style="flex:1">
+            <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:700;color:#fff;margin-bottom:7px">&#x1F389; Limited Time Bonus</div>
+            <div style="font-size:16px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:4px">Invite Friends,<br>Earn <span style="color:#FFD700">&#x20B9;250</span> Each!</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.7);margin-bottom:10px">Credited instantly for every referral</div>
+            <div style="background:rgba(255,255,255,0.12);border:1.5px dashed rgba(255,255,255,0.4);border-radius:10px;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;cursor:pointer" onclick="event.stopPropagation();toast('Copied!')"><div><div style="font-size:8px;color:rgba(255,255,255,0.55);margin-bottom:2px">Your Referral Code</div><div style="font-size:14px;font-weight:800;color:#FFD700;letter-spacing:3px">EGPAY250</div></div><div style="font-size:9px;color:rgba(255,255,255,0.6);font-style:italic;text-align:right;line-height:1.3">Tap to<br>copy</div></div>
+            <button style="width:100%;background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.5);color:#fff;border-radius:10px;padding:9px 16px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px" onclick="event.stopPropagation();toast('Share')">&#x1F4E4; Invite Friends Now</button>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:9px;color:rgba(255,255,255,0.5)">Share via</span>
+              <div style="width:32px;height:32px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="event.stopPropagation();toast('WhatsApp')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20.5 3.5A12 12 0 003.5 17.5L2 22l4.5-1.5A12 12 0 0020.5 3.5z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 11c.3.6.8 1.2 1.4 1.6.6.4 1.3.7 2 .7.4 0 1-.2 1.3-.5l.5-.5c.2-.2.2-.5 0-.7l-1-1c-.2-.2-.5-.2-.7 0l-.3.3c-.5-.3-1-.7-1.3-1.2l.3-.3c.2-.2.2-.5 0-.7l-1-1c-.2-.2-.5-.2-.7 0l-.5.5C9.1 9.5 9 10 9 11z" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#f09433,#dc2743,#bc1888);display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="event.stopPropagation();toast('Instagram')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="#fff" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg></div>
+              <div style="width:32px;height:32px;border-radius:50%;background:#1877F2;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="event.stopPropagation();toast('Facebook')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+              <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="event.stopPropagation();toast('Link Copied!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+              <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="event.stopPropagation();toast('SMS')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;margin-left:12px">
+            <div style="width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.25);display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:18px">&#x1F4B0;</div><div style="font-size:17px;font-weight:800;color:#FFD700;line-height:1">&#x20B9;250</div><div style="font-size:7px;color:rgba(255,255,255,0.6);margin-top:1px">per invite</div></div>
+            <div style="display:flex;gap:10px"><div style="text-align:center"><div style="font-size:12px;font-weight:800;color:#FFD700">12</div><div style="font-size:8px;color:rgba(255,255,255,0.5)">Referred</div></div><div style="text-align:center"><div style="font-size:12px;font-weight:800;color:#FFD700">&#x221E;</div><div style="font-size:8px;color:rgba(255,255,255,0.5)">No Limit</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WATERMARK -->
+    <div class="wm-footer">
+      <div class="wm-row"><div class="wm-r1"><span class="wm-word">FAST</span><span class="wm-word accent">secure</span><span class="wm-word">TRUSTED</span><span class="wm-word accent">payments</span><span class="wm-word">INSTANT</span><span class="wm-word accent">safe</span><span class="wm-word">RELIABLE</span><span class="wm-word accent">love</span><span class="wm-word">FAST</span><span class="wm-word accent">secure</span><span class="wm-word">TRUSTED</span></div></div>
+      <div class="wm-row"><div class="wm-r2"><span class="wm-word bold">EG</span><span class="wm-word">PAY ANYTIME</span><span class="wm-word bold">&#x2022;</span><span class="wm-word">ANYWHERE</span><span class="wm-word bold">100%</span><span class="wm-word">SECURE</span><span class="wm-word bold">EG</span><span class="wm-word">PAY ANYTIME</span></div></div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="bottom-nav">
+    <div class="bn-item act" onclick="setNav(this,'Deals')"><div class="bn-icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 2h12l2 6H4L6 2z" stroke="#0112FE" stroke-width="2" stroke-linejoin="round"/><path d="M3 8h18v13a1 1 0 01-1 1H4a1 1 0 01-1-1V8z" stroke="#0112FE" stroke-width="2"/></svg></div><div class="bn-lbl">Deals</div></div>
+    <div class="bn-item" onclick="setNav(this,'Gift Cards')"><div class="bn-icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M20 12V22H4V12" stroke="#888" stroke-width="1.8" stroke-linecap="round"/><path d="M22 7H2v5h20V7z" stroke="#888" stroke-width="1.8"/><path d="M12 22V7M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" stroke="#888" stroke-width="1.8"/></svg></div><div class="bn-lbl">Gift Cards</div></div>
+    <div class="bn-mid" onclick="toast('Gold / Silver')"><div class="bn-gold-wrap"><div class="bn-ring"></div><div class="bn-gold-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="#3a1a00" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#3a1a00" stroke-width="1.8" stroke-linecap="round"/></svg></div></div><div class="bn-gold-lbl">Gold / Silver</div></div>
+    <div class="bn-item" onclick="setNav(this,'FD')"><div class="bn-icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="14" rx="2" stroke="#888" stroke-width="1.8"/><path d="M3 10h18" stroke="#888" stroke-width="1.8" stroke-linecap="round"/><path d="M7 14h4M7 17h6" stroke="#888" stroke-width="1.8" stroke-linecap="round"/><path d="M8 6V4M16 6V4" stroke="#888" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="bn-lbl">FD</div></div>
+    <div class="bn-item" onclick="setNav(this,'History')"><div class="bn-icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#888" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="#888" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="bn-lbl">History</div></div>
+  </div>
+
+  <!-- BOTTOM SHEET -->
+  <div class="overlay" id="overlay" onclick="closeSheet()">
+    <div class="bottom-sheet" onclick="event.stopPropagation()">
+      <div class="bs-handle"></div>
+      <button class="bs-close" onclick="closeSheet()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="#555" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+      <div class="bs-header"><span class="bs-title">&#x1F514; Reminder</span></div>
+      <div class="bs-biller"><div class="bs-biller-icon" id="bs-icon">⚡</div><div><div class="bs-biller-name" id="bs-name">Electricity Board</div><div class="bs-biller-num" id="bs-num">ELEC-002938</div></div></div>
+      <div class="bs-due-row"><span class="bs-due-lbl">Due Date</span><span class="bs-due-date" id="bs-date">May 5, 2026</span></div>
+      <div class="bs-amt-wrap"><div class="bs-amt-lbl">Amount Due</div><div class="bs-amt" id="bs-amt">&#x20B9;1,240</div><div class="bs-amt-sub">Please pay before due date to avoid penalty</div></div>
+      <div class="bs-actions">
+        <button class="bs-pay-btn" onclick="toast('Paying...');closeSheet()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="14" rx="3" stroke="#fff" stroke-width="2"/><path d="M2 10h20" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="6" cy="15" r="1.5" fill="#fff"/></svg> Pay Now</button>
+        <span class="bs-skip" onclick="toast('Skipped');closeSheet()">Skip for now</span>
+      </div>
+    </div>
+  </div>
+
+</div><div class="toast" id="toast"></div></div>
+<script>
+let cur=0,total=4,timer,startX=0;
+const slidesEl=document.getElementById('slides');
+const dots=document.querySelectorAll('.sdot');
+function goTo(n){cur=(n+total)%total;slidesEl.style.transform='translateX(-'+cur*100+'%)';dots.forEach((d,i)=>d.classList.toggle('active',i===cur));}
+function startAuto(){timer=setInterval(()=>goTo(cur+1),3500)}
+startAuto();
+slidesEl.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;clearInterval(timer)},{passive:true});
+slidesEl.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>40)goTo(dx<0?cur+1:cur-1);startAuto();});
+const dealsData={
+  all:[
+    {cat:'insurance',icon:'🏍️',name:'Bike Insurance',desc:'HDFC Ergo · Min ₹2000',disc:'₹250',type:'Cashback',hot:true,t:'t1'},
+    {cat:'insurance',icon:'🚗',name:'Car Insurance',desc:'ICICI Lombard',disc:'30%',type:'Savings',t:'t2'},
+    {cat:'food',icon:'🍕',name:'Food Delivery',desc:'Swiggy + Zomato',disc:'₹50',type:'Off/order',t:'t3'},
+    {cat:'health',icon:'🩺',name:'Health Checkup',desc:'Thyrocare Full Body',disc:'40%',type:'Discount',t:'t4'},
+    {cat:'shopping',icon:'🛍️',name:'Myntra Fashion',desc:'Min ₹999 order',disc:'₹150',type:'Off',t:'t5'},
+    {cat:'finance',icon:'💳',name:'HDFC Card',desc:'On ₹5000+ spend',disc:'₹500',type:'Off',t:'t6'},
+    {cat:'shopping',icon:'📦',name:'Amazon',desc:'On ₹500+ orders',disc:'10%',type:'Cashback',t:'t7'},
+    {cat:'health',icon:'💊',name:'Medicine Order',desc:'PharmEasy',disc:'20%',type:'Discount',t:'t8'},
+    {cat:'food',icon:'🍔',name:'Burger King',desc:'Via EG Payment',disc:'₹75',type:'Off',t:'t1'},
+    {cat:'finance',icon:'🏦',name:'Mutual Funds',desc:'First SIP via EG',disc:'₹200',type:'Bonus',t:'t3'},
+  ],
+  insurance:[],food:[],shopping:[],health:[],finance:[]
+};
+dealsData.all.forEach(d=>{if(dealsData[d.cat])dealsData[d.cat].push(d);});
+function renderDeals(cat){
+  const items=dealsData[cat]||dealsData.all;
+  document.getElementById('dealsGrid').innerHTML=items.map(d=>`
+    <div class="d-tile ${d.t}" onclick="toast('${d.name}')">
+      <div class="d-tile-top"><div class="d-tile-icon">${d.icon}</div><div class="d-disc">${d.disc}</div></div>
+      ${d.hot?'<div class="d-hot">HOT</div>':''}
+      <div class="d-name">${d.name}</div>
+      <div class="d-desc">${d.desc}</div>
+      <button class="d-grab" onclick="event.stopPropagation();toast('Claimed!')">Grab ${d.type} →</button>
+    </div>`).join('');
+}
+function switchTab(cat,el){document.querySelectorAll('.d-tab').forEach(t=>{t.className='d-tab idle';});el.className='d-tab act';renderDeals(cat);}
+renderDeals('all');
+const iconBgs={'⚡':'background:#FFFBE0;border:1px solid #ffe066','📱':'background:#EEF0FF;border:1px solid #c0c8ff','💧':'background:#E8F8FF;border:1px solid #90d0f0','🔥':'background:#FFF0E8;border:1px solid #ffc090','📡':'background:#F0FFF4;border:1px solid #90e0a8'};
+function openSheet(name,icon,date,amt,num){document.getElementById('bs-name').textContent=name;document.getElementById('bs-icon').textContent=icon;document.getElementById('bs-icon').style.cssText=(iconBgs[icon]||'background:#eee')+';width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0';document.getElementById('bs-date').textContent=date;document.getElementById('bs-amt').textContent='₹'+amt;document.getElementById('bs-num').textContent=num;document.getElementById('overlay').classList.add('show');}
+function closeSheet(){document.getElementById('overlay').classList.remove('show');}
+function setNav(el,name){document.querySelectorAll('.bn-item').forEach(i=>{i.classList.remove('act');i.querySelectorAll('path,rect,circle,line').forEach(p=>p.setAttribute('stroke','#888'));i.querySelector('.bn-lbl').style.color='#aaa';i.querySelector('.bn-icon-box').style.background='transparent';});el.classList.add('act');el.querySelectorAll('path,rect,circle,line').forEach(p=>p.setAttribute('stroke','#0112FE'));el.querySelector('.bn-lbl').style.color='#0112FE';el.querySelector('.bn-icon-box').style.background='#EEF0FF';toast(name+' tapped');}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600);}
+</script>
